@@ -13,8 +13,8 @@ export default function AddCommentForm({
 }: AddCommentFormProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [joinedConversation, joinConversation] = useState<boolean>(false);
-  const [isPending, startTransition] = useTransition();
-  const [formState, action] = useActionState(createPost.bind(null, slug), {
+  const [isPending] = useTransition();
+  const [formState] = useActionState(createPost.bind(null, slug), {
     errors: {
       _form: [],
     }
