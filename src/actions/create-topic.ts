@@ -56,6 +56,7 @@ export async function createTopic(
   try {
     topic = await db.topic.create({
       data: {
+        adminId: session.user.id!,
         slug: result?.data?.title,
         description: result?.data?.description,
       }

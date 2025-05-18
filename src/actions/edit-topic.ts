@@ -53,7 +53,7 @@ export async function editTopic(
 
   try {
     await db.topic.update({
-      where: { slug },
+      where: { slug, adminId: session.user.id },
       data: {
         slug: result?.data?.title,
         description: result?.data?.description,

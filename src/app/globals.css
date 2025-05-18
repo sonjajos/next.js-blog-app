@@ -32,7 +32,7 @@ body {
     @apply text-2xl font-semibold text-textColor;
   }
   p {
-    @apply text-base text-textColor opacity-60;
+    @apply text-base text-textColor opacity-70;
   }
 }
 
