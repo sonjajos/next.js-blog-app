@@ -5,11 +5,13 @@ import AddPostModal from "../post/add-post-modal";
 interface TopicDrawerProps {
   slug: string;
   description: string;
+  isAdmin?: boolean;
 }
 
 export default async function TopicDrawer({
   slug,
   description,
+  isAdmin = false,
 }: TopicDrawerProps) {
   return (
     <>
@@ -20,25 +22,25 @@ export default async function TopicDrawer({
             {slug}
           </div>
           
-          <TopicModal
-            slug={slug}
-            defaultValues={{
-              title: slug ?? '',
-              description: description ?? '',
-            }}
-            button={
-              <div className="cursor-pointer px-2">
-                <PencilSquareIcon color="white" width={24} />
-              </div>
-            }
-          />
+          {isAdmin && (
+            <TopicModal
+              slug={slug}
+              defaultValues={{
+                title: slug ?? '',
+                description: description ?? '',
+              }}
+              button={
+                <div className="cursor-pointer px-2">
+                  <PencilSquareIcon color="white" width={24} />
+                </div>
+              }
+            />
+          )}
+          
         </div>
-        
-
         <p>
           {description}
         </p>
-
         <AddPostModal slug={slug} />
       </div>
     </>

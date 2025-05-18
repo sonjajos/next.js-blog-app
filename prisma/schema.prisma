@@ -44,6 +44,7 @@ model User {
   sessions      Session[]
   Post          Post[]
   Comment       Comment[]
+  Topic         Topic[]
 }
 
 model VerificationToken {
@@ -58,7 +59,9 @@ model Topic {
   id          String @id @default(cuid())
   slug        String @unique
   description String
+  adminId     String
   posts       Post[]
+  admin       User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

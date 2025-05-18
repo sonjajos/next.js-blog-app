@@ -12,12 +12,11 @@ const CreatePostSchema = z.object({
   title: z
     .string()
     .min(3, 'Title should contain at least 3 characters.')
-    .max(150, 'Title should contain maximum 150 characters.')
-    .regex(/^[A-Za-z0-9 _]+$/, "Please use letters and numbers only."),
+    .max(150, 'Title should contain maximum 150 characters.'),
   content: z
     .string()
     .min(3, 'Content should contain at least 3 characters.')
-    .max(5000, 'Content should contain maximum 1000 characters.'),
+    .max(5000, 'Content should contain maximum 5000 characters.'),
 });
 
 interface CreatePostFormState {
@@ -104,6 +103,7 @@ export async function createPost(
   }
 
   revalidatePath(paths.topic(slug));
+  revalidatePath(paths.home());
 
   redirect(paths.post(slug, post.id));
 }

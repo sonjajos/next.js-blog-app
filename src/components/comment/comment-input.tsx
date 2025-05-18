@@ -1,31 +1,45 @@
 "use client"
 
-import { createPost } from "@/actions/create-post";
-import { useActionState, useRef, useState, useTransition } from "react";
+import { startTransition, useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { Button, Textarea } from "@heroui/react";
+import { createComment } from "@/actions/create-comment";
 
 interface AddCommentFormProps {
   slug: string;
+  postId: string;
+  commentId?: string | null;
+  isExpanded?: boolean;
 }
 
 export default function AddCommentForm({
-  slug
+  slug,
+  postId,
+  commentId = null,
+  isExpanded = false,
 }: AddCommentFormProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const [joinedConversation, joinConversation] = useState<boolean>(false);
+  const [joinedConversation, joinConversation] = useState<boolean>(isExpanded);
   const [isPending] = useTransition();
-  const [formState] = useActionState(createPost.bind(null, slug), {
+  const [formState, action] = useActionState(createComment.bind(null, slug, postId, commentId), {
     errors: {
       _form: [],
-    }
+    },
+    success: false,
   });
+
+  useEffect(() => {
+    if (formState?.success) {
+      joinConversation(false);
+      formRef?.current?.reset();
+    }
+  }, [formState?.success])
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
-    // const formData = new FormData(event.currentTarget);
-    // startTransition(() => {
-    //   action(formData);
-    // });
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => {
+      action(formData);
+    });
   };
 
   const isContentInvalid = (formState?.errors?.content?.length ?? 0) > 0;
