@@ -9,6 +9,7 @@ interface AddCommentFormProps {
   postId: string;
   commentId?: string | null;
   isExpanded?: boolean;
+  onCancel?: () => void;
 }
 
 export default function AddCommentForm({
@@ -16,6 +17,7 @@ export default function AddCommentForm({
   postId,
   commentId = null,
   isExpanded = false,
+  onCancel,
 }: AddCommentFormProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [joinedConversation, joinConversation] = useState<boolean>(isExpanded);
@@ -31,6 +33,7 @@ export default function AddCommentForm({
     if (formState?.success) {
       joinConversation(false);
       formRef?.current?.reset();
+      onCancel?.();
     }
   }, [formState?.success])
   
@@ -41,6 +44,11 @@ export default function AddCommentForm({
       action(formData);
     });
   };
+
+  const handleCancel = (): void => {
+    onCancel?.();
+    joinConversation(false);
+  }
 
   const isContentInvalid = (formState?.errors?.content?.length ?? 0) > 0;
   const isFormInvalid = (formState?.errors?._form?.length ?? 0) > 0;
@@ -109,7 +117,7 @@ export default function AddCommentForm({
             <div className="flex flex-row items-center gap-4 mx-4 mb-4">
               <Button
                 isLoading={isPending}
-                onPress={() => joinConversation(false)}
+                onPress={handleCancel}
                 className="light:bg-[black/90] dark:bg-[white/90] text-background flex"
               >
                 Cancel

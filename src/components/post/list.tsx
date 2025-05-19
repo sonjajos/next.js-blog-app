@@ -14,7 +14,7 @@ export default async function PostList({
   return (
     <div className="flex-1 w-full flex flex-col items-start justify-between gap-4 pt-6">
       {posts?.map((post) => (
-        <PostDisplay key={post.id} post={post} slug={post.topic.slug} />
+        <PostDisplay key={post.id} post={post} slug={post.topic.slug} commentsCount={post._count?.comments} />
       ))}
       {!posts.length && (
           <EmptyState
