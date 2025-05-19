@@ -28,7 +28,8 @@ export default async function PostPage({
           image: true,
           name: true,
         }
-      }
+      },
+      _count: { select: { comments: true } }
     }
   });
 
@@ -36,9 +37,9 @@ export default async function PostPage({
 
   return (
     <div className="flex-1 pt-6 flex flex-col gap-8">
-      {post && <PostDisplay post={post} slug={slug} isDisabled />}
+      {post && <PostDisplay post={post} slug={slug} isDisabled commentsCount={post._count?.comments ?? 0} />}
       <AddCommentForm slug={slug} postId={postId} />
-      <CommentList data={comments} />
+      <CommentList data={comments} slug={slug} />
     </div>
   )
 }

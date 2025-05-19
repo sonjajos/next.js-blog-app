@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "Topic" ADD COLUMN     "adminId" TEXT NOT NULL;
+ALTER TABLE "Topic" ADD COLUMN     "adminId" TEXT;
 
 -- AddForeignKey
 ALTER TABLE "Topic" ADD CONSTRAINT "Topic_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

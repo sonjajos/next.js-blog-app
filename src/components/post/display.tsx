@@ -1,13 +1,11 @@
-import {
-  ChatBubbleBottomCenterIcon,
-  HandThumbDownIcon,
-  HandThumbUpIcon,
-  ShareIcon,
-} from "@heroicons/react/16/solid";
 import { HeroAvatar } from "../hero-components";
 import { Post } from "@prisma/client";
 import Link from "next/link";
 import paths from "@/paths";
+import Like from "../interactions/like";
+import Dislike from "../interactions/dislike";
+import Reply from "../interactions/reply";
+import Share from "../interactions/share";
 
 interface PostDisplayProps {
   slug: string;
@@ -19,12 +17,14 @@ interface PostDisplayProps {
     }
   };
   isDisabled?: boolean;
+  commentsCount: number;
 }
 
 export default async function PostDisplay({
   post,
   slug,
   isDisabled = false,
+  commentsCount = 0,
 }: PostDisplayProps) {
   return (
     <Link
@@ -66,25 +66,10 @@ export default async function PostDisplay({
       </p>
 
       <div className="flex flex-row gap-4">
-        <div className="cursor-pointer hover:text-blue-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2">
-          <HandThumbUpIcon width={16} className="" />
-          <div>0</div>
-        </div>
-
-        <div className="cursor-pointer hover:text-red-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2">
-          <HandThumbDownIcon width={16} className="" />
-          <div>0</div>
-        </div>
-
-        <div className="cursor-pointer hover:text-blue-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2">
-          <ChatBubbleBottomCenterIcon width={16} className="" />
-          <div>0</div>
-        </div>
-
-        <div className="cursor-pointer hover:text-blue-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2">
-          <ShareIcon width={16} className="" />
-          <div>Share</div>
-        </div>
+        <Like count={0} />
+        <Dislike count={0} />
+        <Reply count={commentsCount} />
+        <Share link="" />
       </div>
     </Link>
   )

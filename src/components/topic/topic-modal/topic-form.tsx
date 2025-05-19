@@ -32,6 +32,7 @@ export default function TopicForm({
     if (formState?.success) {
       handleClose();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formState?.success])
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
