@@ -11,7 +11,7 @@ interface DislikeProps {
 export default function Dislike({
   count = 0,
   className = "",
-  isDisliked = false,
+  // isDisliked = false,
 }: DislikeProps) {
   return (
     <div className={`${className} cursor-pointer hover:text-pink-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2`}>

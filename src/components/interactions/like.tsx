@@ -10,7 +10,7 @@ interface LikeProps {
   
 export default function Like({
   count = 0,
-  isLiked = false,
+  // isLiked = false,
   className = ""
 }: LikeProps) {
   return (

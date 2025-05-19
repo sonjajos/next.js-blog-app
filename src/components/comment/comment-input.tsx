@@ -35,6 +35,7 @@ export default function AddCommentForm({
       formRef?.current?.reset();
       onCancel?.();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formState?.success])
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

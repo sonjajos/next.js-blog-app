@@ -5,7 +5,7 @@ interface ShareProps {
 }
   
 export default async function Share({
-  link,
+  // link,
 }: ShareProps) {
   return (
     <div className="cursor-pointer hover:text-blue-600 p-2 rounded-[10px] bg-overlay flex flex-row items-center gap-2">
