@@ -14,11 +14,9 @@ import {
 import { useSession } from "next-auth/react";
 import SignOutForm from "../auth-buttons/SignOutForm";
 import AuthModal from "../auth-modal";
-import Image from "next/image"
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/16/solid";
 import TopicModal from "../topic/topic-modal";
-import Link from "next/link";
-import paths from "@/paths";
+import Logo from "../logo";
 
 export default function Header() {
   const session = useSession();
@@ -28,16 +26,7 @@ export default function Header() {
   return (
     <Navbar className="bg-background border-b-[1px] border-b-slate-300/20">
       <NavbarBrand className="max-w-[200px]">
-        <Link
-          href={paths.home()}
-          className="flex flex-row items-center cursor-pointer"
-        >
-          <Image src="/logo.svg" width={50} height={50} alt="Logo" />
-          <h1>
-            braggit
-          </h1>
-        </Link>
-        
+        <Logo />
       </NavbarBrand>
       <NavbarContent className="flex-1">
         <NavbarItem className="flex-1">
