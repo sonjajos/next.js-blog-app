@@ -3,6 +3,7 @@ import CommentList from "@/components/comment/list";
 import PostDisplay from "@/components/post/display";
 import { db } from "@/db";
 import { fetchComments } from "@/db/queries/comments";
+import { notFound } from "next/navigation";
 
 interface PostPageProps {
   params: Promise<{
@@ -32,6 +33,10 @@ export default async function PostPage({
       _count: { select: { comments: true } }
     }
   });
+
+  if (!post) {
+    notFound();
+  }
 
   const comments = await fetchComments();
 
