@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { JSX } from 'react';
 import { render, screen } from '@testing-library/react';
 import Header from './';
 import { useSession } from 'next-auth/react';
@@ -9,15 +10,19 @@ jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
 }));
 
+type ComponentProps = {
+  children: JSX.Element;
+}
+
 // Mock @heroui/react components
 jest.mock('@heroui/react', () => ({
-  Navbar: ({ children }: any) => <nav>{children}</nav>,
-  NavbarBrand: ({ children }: any) => <div>{children}</div>,
-  NavbarContent: ({ children }: any) => <div>{children}</div>,
-  NavbarItem: ({ children }: any) => <div>{children}</div>,
-  NavbarMenu: ({ children }: any) => <div>{children}</div>,
-  NavbarMenuItem: ({ children }: any) => <div>{children}</div>,
-  NavbarMenuToggle: (props: any) => <button {...props} />,
+  Navbar: ({ children }: ComponentProps) => <nav>{children}</nav>,
+  NavbarBrand: ({ children }: ComponentProps) => <div>{children}</div>,
+  NavbarContent: ({ children }: ComponentProps) => <div>{children}</div>,
+  NavbarItem: ({ children }: ComponentProps) => <div>{children}</div>,
+  NavbarMenu: ({ children }: ComponentProps) => <div>{children}</div>,
+  NavbarMenuItem: ({ children }: ComponentProps) => <div>{children}</div>,
+  NavbarMenuToggle: (props: ComponentProps) => <button {...props} />,
 }));
 
 // Mock internal components

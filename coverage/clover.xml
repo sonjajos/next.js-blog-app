@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1748122185872" clover="3.2.0">
-  <project timestamp="1748122185872" name="All files">
+<coverage generated="1748123053164" clover="3.2.0">
+  <project timestamp="1748123053164" name="All files">
     <metrics statements="68" coveredstatements="68" conditionals="7" coveredconditionals="6" methods="1" coveredmethods="1" elements="76" coveredelements="75" complexity="0" loc="68" ncloc="68" packages="1" files="1" classes="1"/>
     <file name="index.tsx" path="/Users/sonjajosanov/Desktop/projects/next.js-blog-app/src/components/header/index.tsx">
       <metrics statements="68" coveredstatements="68" conditionals="7" coveredconditionals="6" methods="1" coveredmethods="1"/>
