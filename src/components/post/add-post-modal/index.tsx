@@ -32,7 +32,7 @@ export default function AddPostModal({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         backdrop="blur"
-        className="bg-background py-4 border-[1px] border-white/20"
+        className="bg-background py-4 border-[1px] border-overlay"
       >
         <ModalContent>
           {() => (

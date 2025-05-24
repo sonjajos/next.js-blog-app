@@ -2,8 +2,6 @@ import { HeroAvatar } from "../hero-components";
 import { Post } from "@prisma/client";
 import Link from "next/link";
 import paths from "@/paths";
-import Like from "../interactions/like";
-import Dislike from "../interactions/dislike";
 import Reply from "../interactions/reply";
 import Share from "../interactions/share";
 
@@ -27,12 +25,9 @@ export default async function PostDisplay({
   commentsCount = 0,
 }: PostDisplayProps) {
   return (
-    <Link
+    <div
       key={post.id}
-      href={paths.post(slug, post.id)}
-      aria-disabled
-      tabIndex={isDisabled ? -1 : undefined}
-      className={`flex flex-col gap-4 pb-6 border-b-[1px] border-overlay ${!isDisabled ? "hover:bg-hover" : "pointer-events-none"}`}
+      className="flex flex-col gap-4 pb-6 border-b-[1px] border-overlay"
     >
       <div className="flex flex-row gap-4">
         <HeroAvatar
@@ -40,9 +35,13 @@ export default async function PostDisplay({
           size="sm"
         />
         <div>
-          <div className="font-bold text-textColor text-xs">
-            {slug}
-          </div>
+          <Link
+            href={paths.topic(slug)}
+          >
+            <div className="font-bold text-textColor text-xs">
+              {slug}
+            </div>
+          </Link>
           <div className="flex flex-row gap-4">
             <div className="text-textColor text-xs opacity-80">
               {post?.user?.name}
@@ -58,19 +57,24 @@ export default async function PostDisplay({
         </div>
         
       </div>
-      <div className="text-3xl font-bold">
-        {post.title}
-      </div>
-      <p>
-        {post.content}
-      </p>
+      <Link
+        href={paths.post(slug, post.id)}
+        tabIndex={isDisabled ? -1 : undefined}
+        className={`flex flex-col gap-4 ${!isDisabled ? "hover:bg-hover" : "pointer-events-none"}`}
+      >
+        <div className="text-3xl font-bold">
+          {post.title}
+        </div>
+        <p>
+          {post.content}
+        </p>
+      </Link>
+      
 
       <div className="flex flex-row gap-4">
-        <Like count={0} />
-        <Dislike count={0} />
         <Reply count={commentsCount} />
         <Share link="" />
       </div>
-    </Link>
+    </div>
   )
 }

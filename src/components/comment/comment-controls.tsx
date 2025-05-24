@@ -1,7 +1,5 @@
 "use client";
 
-import Like from "../interactions/like";
-import Dislike from "../interactions/dislike";
 import Reply from "../interactions/reply";
 import AddCommentForm from "./comment-input";
 import { useState } from "react";
@@ -22,8 +20,6 @@ export default function CommentControls({
   return (
     <>
       <div className="flex flex-row gap-2">
-        <Like className="bg-transparent" />
-        <Dislike className="bg-transparent" />
         <Reply
           text="Reply"
           className="bg-transparent"
