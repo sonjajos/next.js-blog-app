@@ -83,7 +83,7 @@ export default function TopicForm({
                 "group-data-[focus=true]:!bg-background",
                 "dark:group-data-[focus=true]:!bg-background",
                 "!cursor-text",
-                "border-[1px] border-white/20",
+                "border-[1px] border-overlay",
               ],
             }}
           />
@@ -114,7 +114,7 @@ export default function TopicForm({
                 "group-data-[focus=true]:!bg-background",
                 "dark:group-data-[focus=true]:!bg-background",
                 "!cursor-text",
-                "border-[1px] border-white/20",
+                "border-[1px] border-overlay",
               ],
             }}
           />

@@ -1,5 +1,6 @@
 import PostList from "@/components/post/list";
 import TopicList from "@/components/topic/topic-list";
+import WebDrawer from "@/components/web-drawer";
 import { fetchPosts } from "@/db/queries/posts";
 
 export default async function Home() {
@@ -9,7 +10,9 @@ export default async function Home() {
       <div className="flex-1">
         <PostList fetchData={fetchPosts} />
       </div>
-      <TopicList />
+      <WebDrawer>
+        <TopicList />
+      </WebDrawer>
     </div>
   );
 }

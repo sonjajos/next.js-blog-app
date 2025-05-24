@@ -18,6 +18,7 @@ export default async function TopicNotFoundPage() {
         heading="Sorry but we couldn't find requested resource"
         paragraph="Seems like resource you're looking for doesn't exist or is deleted."
         icon={NotFoundIcon}
+        showButton
       />
     </div>
   )

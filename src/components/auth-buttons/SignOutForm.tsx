@@ -1,10 +1,15 @@
 import { signOut } from "@/actions/sign-out";
 import SignOutBttn from "./SignOutBttn";
 
-export default function SignOutForm() {
+interface SignOutFormProps {
+  className?: string;
+  textStyle?: string;
+}
+
+export default function SignOutForm(props: SignOutFormProps) {
   return (
     <form action={signOut}>
-      <SignOutBttn />
+      <SignOutBttn {...props} />
     </form>
   );
 }

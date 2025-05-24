@@ -3,6 +3,7 @@
 import { startTransition, useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { Button, Textarea } from "@heroui/react";
 import { createComment } from "@/actions/create-comment";
+import { useSession } from "next-auth/react";
 
 interface AddCommentFormProps {
   slug: string;
@@ -20,6 +21,7 @@ export default function AddCommentForm({
   onCancel,
 }: AddCommentFormProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
+  const session = useSession();
   const [joinedConversation, joinConversation] = useState<boolean>(isExpanded);
   const [isPending] = useTransition();
   const [formState, action] = useActionState(createComment.bind(null, slug, postId, commentId), {
@@ -54,11 +56,11 @@ export default function AddCommentForm({
   const isContentInvalid = (formState?.errors?.content?.length ?? 0) > 0;
   const isFormInvalid = (formState?.errors?._form?.length ?? 0) > 0;
 
-  return (
+  return session?.data?.user ? (
     <div className="flex flex-col items-center justify-center p-[2px] w-full min-w-[300px]">
       {!joinedConversation && (
         <div
-          className="flex flex-col text-left items-start justify-start border-[1px] border-white/20 rounded-[10px] cursor-pointer w-full p-4"
+          className="flex flex-col text-left items-start justify-start border-[1px] border-overlay rounded-[10px] cursor-pointer w-full p-4"
           onClick={() => joinConversation(true)}
         >
           <p>
@@ -73,7 +75,7 @@ export default function AddCommentForm({
           noValidate
           className="w-full flex flex-col gap-4 items-center justify-center"
         >
-          <div className="w-full border-[1px] border-white/20 flex flex-col items-end rounded-[10px]">
+          <div className="w-full border-[1px] border-overlay flex flex-col items-end rounded-[10px]">
             <Textarea
               label="Content"
               name="content"
@@ -136,5 +138,5 @@ export default function AddCommentForm({
         </form>
       )}
     </div>
-  );
+  ) : null;
 }

@@ -7,12 +7,14 @@ import Link from "next/link";
 interface EmptyStateProps {
   heading: string;
   paragraph: string;
+  showButton?: boolean;
   icon?: JSX.Element;
 }
 
 export default async function EmptyState({
   heading,
   paragraph,
+  showButton = false,
   icon,
 }: EmptyStateProps) {
   return (
@@ -21,11 +23,13 @@ export default async function EmptyState({
       <h2>{heading}</h2>
       <p>{paragraph}</p>
       <Link href={paths.home()}>
-        <HeroButton
-          className="bg-transparent border-[1px] border-blue-600 text-blue-600"
-        >
-          Back to home
-        </HeroButton>
+        {showButton && (
+          <HeroButton
+            className="bg-transparent border-[1px] border-blue-600 text-blue-600"
+          >
+            Back to home
+          </HeroButton>
+        )}
       </Link>
       
     </div>

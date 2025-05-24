@@ -31,7 +31,7 @@ export default async function RootLayout({
       >
         <main className="flex flex-col row-start-2">
           <Providers>
-            <div className="flex flex-col min-h-screen w-screen px-4 gap-16 sm:px-20 font-[family-name:var(--font-geist-sans)]">
+            <div className="flex flex-col min-h-screen w-screen px-4 gap-16 sm:px-20 font-[family-name:var(--font-geist-sans)] overscroll-x-none">
               {children}
             </div>
           </Providers>
