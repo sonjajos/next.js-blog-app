@@ -1,4 +1,4 @@
-name: Validate PR (lint, test, build)
+name: Validate PR (lint & test)
 
 on:
   pull_request:
