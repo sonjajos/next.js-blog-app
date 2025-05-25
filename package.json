@@ -58,6 +58,8 @@
     "*.{js,ts,jsx,tsx}": [
       "eslint --fix",
       "prettier --write"
-    ]
+    ],
+    "node_modules/**/*": "false",
+    ".next/**/*": "false"
   }
 }
