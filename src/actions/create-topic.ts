@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { db } from "@/db";
-import paths from "@/paths";
-import { topicSchema } from "@/utils/schema";
-import { Topic } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { auth } from '@/auth';
+import { db } from '@/db';
+import paths from '@/paths';
+import { topicSchema } from '@/utils/schema';
+import type { Topic } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 interface CreateTopicFormState {
   success?: boolean;
@@ -17,16 +17,14 @@ interface CreateTopicFormState {
   };
 }
 
-export async function createTopic(
-  formState: CreateTopicFormState,
-  formData: FormData) {
-  const title = formData.get("title");
-  const description = formData.get("description");
+export async function createTopic(formState: CreateTopicFormState, formData: FormData) {
+  const title = formData.get('title');
+  const description = formData.get('description');
 
   const result = topicSchema.safeParse({
     title,
-    description
-  })
+    description,
+  });
 
   if (!result.success) {
     const errors = result.error.flatten()?.fieldErrors;
@@ -36,7 +34,7 @@ export async function createTopic(
         ...errors,
         _form: [],
       },
-    }
+    };
   }
 
   const session = await auth();
@@ -47,8 +45,8 @@ export async function createTopic(
       errors: {
         title: [],
         description: [],
-        _form: ["You must sign in first!"],
-      }
+        _form: ['You must sign in first!'],
+      },
     };
   }
 
@@ -59,7 +57,7 @@ export async function createTopic(
         adminId: session.user.id!,
         slug: result?.data?.title,
         description: result?.data?.description,
-      }
+      },
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -69,7 +67,7 @@ export async function createTopic(
           title: [],
           description: [],
           _form: [err.message],
-        }
+        },
       };
     } else {
       return {
@@ -77,8 +75,8 @@ export async function createTopic(
         errors: {
           title: [],
           description: [],
-          _form: ["Something went wrong."],
-        }
+          _form: ['Something went wrong.'],
+        },
       };
     }
   }

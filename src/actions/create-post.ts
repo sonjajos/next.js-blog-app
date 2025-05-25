@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { db } from "@/db";
-import paths from "@/paths";
-import { Post } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { z } from "zod";
+import { auth } from '@/auth';
+import { db } from '@/db';
+import paths from '@/paths';
+import type { Post } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 const CreatePostSchema = z.object({
   title: z
@@ -27,17 +27,14 @@ interface CreatePostFormState {
   };
 }
 
-export async function createPost(
-  slug: string,
-  formState: CreatePostFormState,
-  formData: FormData) {
-  const title = formData.get("title");
-  const content = formData.get("content");
+export async function createPost(slug: string, formState: CreatePostFormState, formData: FormData) {
+  const title = formData.get('title');
+  const content = formData.get('content');
 
   const result = CreatePostSchema.safeParse({
     title,
-    content
-  })
+    content,
+  });
 
   if (!result.success) {
     const errors = result.error.flatten()?.fieldErrors;
@@ -46,7 +43,7 @@ export async function createPost(
         ...errors,
         _form: [],
       },
-    }
+    };
   }
 
   const session = await auth();
@@ -56,8 +53,8 @@ export async function createPost(
       errors: {
         title: [],
         content: [],
-        _form: ["You must sign in first!"],
-      }
+        _form: ['You must sign in first!'],
+      },
     };
   }
 
@@ -67,8 +64,8 @@ export async function createPost(
       errors: {
         title: [],
         content: [],
-        _form: ["Cannot find topic."],
-      }
+        _form: ['Cannot find topic.'],
+      },
     };
   }
 
@@ -78,10 +75,10 @@ export async function createPost(
       data: {
         title: result.data.title,
         content: result.data.content,
-        userId: session.user?.id ?? "",
+        userId: session.user?.id ?? '',
         topicId: topic.id,
-      }
-    })
+      },
+    });
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {
@@ -89,15 +86,15 @@ export async function createPost(
           title: [],
           content: [],
           _form: [err.message],
-        }
+        },
       };
     } else {
       return {
         errors: {
           title: [],
           content: [],
-          _form: ["Something went wrong."],
-        }
+          _form: ['Something went wrong.'],
+        },
       };
     }
   }

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Reply from "../interactions/reply";
-import AddCommentForm from "./comment-input";
-import { useState } from "react";
+import Reply from '../interactions/reply';
+import AddCommentForm from './comment-input';
+import { useState } from 'react';
 
 interface CommentControlsProps {
   postId: string;
@@ -10,21 +10,13 @@ interface CommentControlsProps {
   slug: string;
 }
 
-export default function CommentControls({
-  postId,
-  commentId,
-  slug,
-}: CommentControlsProps) {
+export default function CommentControls({ postId, commentId, slug }: CommentControlsProps) {
   const [isReplyExpanded, expendReply] = useState<boolean>(false);
 
   return (
     <>
-      <div className="flex flex-row gap-2">
-        <Reply
-          text="Reply"
-          className="bg-transparent"
-          onClick={() => expendReply(true)}
-        />
+      <div className='flex flex-row gap-2'>
+        <Reply text='Reply' className='bg-transparent' onClick={() => expendReply(true)} />
       </div>
       {isReplyExpanded && (
         <AddCommentForm
@@ -36,5 +28,5 @@ export default function CommentControls({
         />
       )}
     </>
-  )
+  );
 }

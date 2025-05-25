@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/display-name */
-import React, { JSX } from 'react';
+import type { JSX } from 'react';
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Header from './';
 import { useSession } from 'next-auth/react';
@@ -12,7 +13,7 @@ jest.mock('next-auth/react', () => ({
 
 type ComponentProps = {
   children: JSX.Element;
-}
+};
 
 // Mock @heroui/react components
 jest.mock('@heroui/react', () => ({
@@ -26,12 +27,11 @@ jest.mock('@heroui/react', () => ({
 }));
 
 // Mock internal components
-jest.mock('../auth-modal', () => () => <div data-testid="auth-modal" />);
-jest.mock('../topic/topic-modal', () => () => <div data-testid="topic-modal" />);
-jest.mock('../user-avatar', () => () => <div data-testid="user-avatar" />);
-jest.mock('../search', () => () => <input data-testid="search-input" />);
-jest.mock('../logo', () => () => <div data-testid="logo" />);
-
+jest.mock('../auth-modal', () => () => <div data-testid='auth-modal' />);
+jest.mock('../topic/topic-modal', () => () => <div data-testid='topic-modal' />);
+jest.mock('../user-avatar', () => () => <div data-testid='user-avatar' />);
+jest.mock('../search', () => () => <input data-testid='search-input' />);
+jest.mock('../logo', () => () => <div data-testid='logo' />);
 
 describe('Header component', () => {
   it('renders correctly for unauthenticated users', () => {

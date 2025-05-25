@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 export {
   Button as HeroButton,
   Chip as HeroChip,
   Avatar as HeroAvatar,
   Spinner as HeroSpinner,
-} from "@heroui/react";
+} from '@heroui/react';
