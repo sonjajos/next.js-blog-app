@@ -1,0 +1,30 @@
+name: Validate branch name
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Check develop branch naming convention
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
+          BRANCH="${{ github.head_ref }}"
+
+          if [[ "$BRANCH" == release/* || \
+              "$BRANCH" == hotfix/* || \
+              "$BRANCH" == fix/* || \
+              "$BRANCH" == chore/* || \
+              "$BRANCH" == feature/* || \
+              "$BRANCH" == improvement/* || \
+              "$BRANCH" == refactor/* || \
+              "$BRANCH" == test/* || \
+              "$BRANCH" == docs/* ]]; then
+            echo "✅ Branch '$BRANCH' allowed to merge into develop"
+          else
+              echo "❌ Branch '$BRANCH' is not allowed to merge into develop"
+              exit 1
+          fi
