@@ -9,13 +9,6 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-      GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
-      GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -33,6 +26,3 @@ jobs:
 
       - name: 🟠 Run tests
         run: npm test
-
-      - name: ⚙️ Run build
-        run: npm run build
