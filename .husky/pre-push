@@ -6,13 +6,21 @@ read local_ref local_sha remote_ref remote_sha
 REMOTE_BRANCH=${remote_ref#refs/heads/}
 BRANCH=$(git symbolic-ref --short HEAD)
 
-if [ "$REMOTE_BRANCH" = "main" ] || [ "$REMOTE_BRANCH" = "develop" ]; then
-  echo "‼️ Pushing directly to '$REMOTE_BRANCH' ‼️"
+if [ "$REMOTE_BRANCH" = "main" ]; then
+  echo "❌ Pushing directly to '$REMOTE_BRANCH' is NOT allowed! Please merge 'develop' or create new hotfix/ branch."
+  exit 1
+fi
+if [ "$REMOTE_BRANCH" = "develop" ]; then
+  echo "‼️ Pushing directly to '$REMOTE_BRANCH' - this push may get rejected by GH ‼️"
+  echo "🟠 Running tests..."
+  npm test
   echo "⏺️ Running build command..."
   npm run build
 else
   if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|chore|refactor|test|docs)/'; then
     echo "✅ Branch name '$BRANCH' is valid."
+    echo "🟠 Running tests..."
+    npm test
     echo "⏭️ Skipping build check on branch: $BRANCH"
   else
     echo "❌ Invalid branch name: '$BRANCH'"
