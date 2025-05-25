@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
-import PostList from "@/components/post/list";
-import TopicDrawer from "@/components/topic/drawer";
-import { db } from "@/db";
-import { fetchPostsBySlug } from "@/db/queries/posts";
-import { notFound } from "next/navigation";
+import { auth } from '@/auth';
+import PostList from '@/components/post/list';
+import TopicDrawer from '@/components/topic/drawer';
+import { db } from '@/db';
+import { fetchPostsBySlug } from '@/db/queries/posts';
+import { notFound } from 'next/navigation';
 
 interface TopicPageProps {
   params: Promise<{
@@ -11,9 +11,7 @@ interface TopicPageProps {
   }>;
 }
 
-export default async function TopicPage({
-  params,
-}: TopicPageProps) {
+export default async function TopicPage({ params }: TopicPageProps) {
   const { slug } = await params;
   const session = await auth();
   const topic = await db.topic.findFirst({ where: { slug: decodeURI(slug?.toLowerCase()) } });
@@ -24,16 +22,14 @@ export default async function TopicPage({
   }
 
   return (
-    <div className="flex-1 w-full h-screen flex flex-row items-start justify-between gap-4">
-      <PostList
-        fetchData={(take?: number, skip?: number) => fetchPostsBySlug(slug, take, skip)}
-      />
+    <div className='flex-1 w-full h-screen flex flex-row items-start justify-between gap-4'>
+      <PostList fetchData={(take?: number, skip?: number) => fetchPostsBySlug(slug, take, skip)} />
 
       <TopicDrawer
-        slug={topic?.slug ?? ""}
-        description={topic?.description ?? ""}
+        slug={topic?.slug ?? ''}
+        description={topic?.description ?? ''}
         isAdmin={isAdmin}
       />
     </div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { db } from "@/db";
-import paths from "@/paths";
-import { topicSchema } from "@/utils/schema";
-import { revalidatePath } from "next/cache";
+import { auth } from '@/auth';
+import { db } from '@/db';
+import paths from '@/paths';
+import { topicSchema } from '@/utils/schema';
+import { revalidatePath } from 'next/cache';
 
 interface EditTopicFormState {
   success?: boolean;
@@ -15,17 +15,14 @@ interface EditTopicFormState {
   };
 }
 
-export async function editTopic(
-  slug: string,
-  formState: EditTopicFormState,
-  formData: FormData) {
-  const title = formData.get("title");
-  const description = formData.get("description");
+export async function editTopic(slug: string, formState: EditTopicFormState, formData: FormData) {
+  const title = formData.get('title');
+  const description = formData.get('description');
 
   const result = topicSchema.safeParse({
     title,
-    description
-  })
+    description,
+  });
 
   if (!result.success) {
     const errors = result.error.flatten()?.fieldErrors;
@@ -35,7 +32,7 @@ export async function editTopic(
         ...errors,
         _form: [],
       },
-    }
+    };
   }
 
   const session = await auth();
@@ -46,8 +43,8 @@ export async function editTopic(
       errors: {
         title: [],
         description: [],
-        _form: ["You must sign in first!"],
-      }
+        _form: ['You must sign in first!'],
+      },
     };
   }
 
@@ -57,7 +54,7 @@ export async function editTopic(
       data: {
         slug: result?.data?.title,
         description: result?.data?.description,
-      }
+      },
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
@@ -67,7 +64,7 @@ export async function editTopic(
           title: [],
           description: [],
           _form: [err.message],
-        }
+        },
       };
     } else {
       return {
@@ -75,8 +72,8 @@ export async function editTopic(
         errors: {
           title: [],
           description: [],
-          _form: ["Something went wrong."],
-        }
+          _form: ['Something went wrong.'],
+        },
       };
     }
   }
@@ -87,5 +84,5 @@ export async function editTopic(
   return {
     success: true,
     errors: {},
-  }
+  };
 }

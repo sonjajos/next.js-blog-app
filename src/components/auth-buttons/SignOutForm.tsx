@@ -1,5 +1,5 @@
-import { signOut } from "@/actions/sign-out";
-import SignOutBttn from "./SignOutBttn";
+import { signOut } from '@/actions/sign-out';
+import SignOutBttn from './SignOutBttn';
 
 interface SignOutFormProps {
   className?: string;

@@ -1,10 +1,10 @@
-"use server";
+'use server';
 
-import { auth } from "@/auth";
-import { db } from "@/db";
-import paths from "@/paths";
-import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import { auth } from '@/auth';
+import { db } from '@/db';
+import paths from '@/paths';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
 
 const CreateCommentSchema = z.object({
   content: z
@@ -25,13 +25,14 @@ export async function createComment(
   postId: string,
   parentId: string | null,
   formState: CreateCommentFormState,
-  formData: FormData) {
+  formData: FormData,
+) {
   // TODO: revalidate post page
   // const { slug, postId, parentId } = props;
-  const content = formData.get("content");
+  const content = formData.get('content');
 
   const result = CreateCommentSchema.safeParse({
-    content
+    content,
   });
 
   if (!result.success) {
@@ -42,7 +43,7 @@ export async function createComment(
         _form: [],
       },
       success: false,
-    }
+    };
   }
 
   const session = await auth();
@@ -51,7 +52,7 @@ export async function createComment(
     return {
       errors: {
         content: [],
-        _form: ["You must sign in first!"],
+        _form: ['You must sign in first!'],
       },
       success: false,
     };
@@ -61,11 +62,11 @@ export async function createComment(
     await db.comment.create({
       data: {
         content: result.data.content,
-        userId: session.user?.id ?? "",
+        userId: session.user?.id ?? '',
         parentId,
         postId,
-      }
-    })
+      },
+    });
   } catch (err: unknown) {
     if (err instanceof Error) {
       return {
@@ -79,7 +80,7 @@ export async function createComment(
       return {
         errors: {
           content: [],
-          _form: ["Something went wrong."],
+          _form: ['Something went wrong.'],
         },
         success: false,
       };
