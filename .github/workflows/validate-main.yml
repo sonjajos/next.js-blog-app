@@ -14,9 +14,9 @@ jobs:
           echo "Source branch: ${{ github.head_ref }}"
           BRANCH="${{ github.head_ref }}"
 
-          if [["$BRANCH" == "release/*"]]; then
+          if [[ "$BRANCH" == release/* ]]; then
             echo "✅ Release branch allowed to merge into main"
-          elif [["$BRANCH" == "hotifx/*"]]; then
+          elif [[ "$BRANCH" == hotifx/* ]]; then
             echo "✅ Hotfix branch allowed to merge into main"
           else
             echo "❌ Branch '$BRANCH' is not allowed to merge into main"

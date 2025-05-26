@@ -18,6 +18,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          pat_token: ${{ secrets.PAT_TOKEN }}
           vercel-args: '--prod'
           working-directory: '.'
       - name: Read version from package.json
@@ -32,4 +33,4 @@ jobs:
         run: |
           echo "Tagging version ${{ steps.get_version.outputs.version }}"
           git tag ${{ steps.get_version.outputs.version }}
-          git push origin ${{ steps.get_version.outputs.version }}
+          git push https://x-access-token:${pat_token}@github.com/username/repo.git ${{ steps.get_version.outputs.version }}
