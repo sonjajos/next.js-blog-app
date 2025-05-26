@@ -1,4 +1,26 @@
 #!/usr/bin/env sh
+set -e
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run build
+read local_ref local_sha remote_ref remote_sha
+BRANCH=$(git symbolic-ref --short HEAD)
+
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
+  echo "❌ Pushing directly to '$REMOTE_BRANCH' is NOT allowed!"
+  exit 1
+else
+  if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|release|refactor|test|docs|chore)/'; then
+    echo "✅ Branch name '$BRANCH' is valid."
+    if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|refactor|test)/'; then
+      echo "🟠 Running tests..."
+      if ! npm test; then
+        echo "❌ Tests failed! Push aborted."
+        exit 1
+      fi
+    fi
+  else
+    echo "❌ Invalid branch name: '$BRANCH'"
+    echo "🔒 Branch must start with one of: feature/, fix/, improvement/, hotfix/, release/, refactor/, test/, docs/, chore/"
+    exit 1
+  fi
+fi

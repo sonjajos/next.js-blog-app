@@ -1,6 +1,6 @@
 {
   "name": "blog-app",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -56,10 +56,8 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "node_modules/**/*": "false",
-    ".next/**/*": "false"
+      "eslint",
+      "prettier --check"
+    ]
   }
 }

@@ -1,0 +1,24 @@
+name: Validate naming conventions for main branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Check main branch naming convention
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
+          BRANCH="${{ github.head_ref }}"
+
+          if [["$BRANCH" == "release/*"]]; then
+            echo "✅ Release branch allowed to merge into main"
+          elif [["$BRANCH" == "hotifx/*"]]; then
+            echo "✅ Hotfix branch allowed to merge into main"
+          else
+            echo "❌ Branch '$BRANCH' is not allowed to merge into main"
+            exit 1
+          fi
