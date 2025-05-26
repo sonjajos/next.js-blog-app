@@ -32,4 +32,4 @@ jobs:
         run: |
           echo "Tagging version ${{ steps.get_version.outputs.version }}"
           git tag ${{ steps.get_version.outputs.version }}
-          git push https://x-access-token:${pat_token}@github.com/username/repo.git ${{ steps.get_version.outputs.version }}
+          git push https://x-access-token:${pat_token}@github.com/sonjajos/next.js-blog-app.git ${{ steps.get_version.outputs.version }}
