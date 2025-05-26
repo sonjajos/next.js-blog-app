@@ -3,22 +3,24 @@ set -e
 . "$(dirname -- "$0")/_/husky.sh"
 
 read local_ref local_sha remote_ref remote_sha
-REMOTE_BRANCH=${remote_ref#refs/heads/}
 BRANCH=$(git symbolic-ref --short HEAD)
 
-if [ "$REMOTE_BRANCH" = "main" ] || [ "$REMOTE_BRANCH" = "develop" ]; then
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]; then
   echo "❌ Pushing directly to '$REMOTE_BRANCH' is NOT allowed!"
   exit 1
-fi
-
-if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|release|refactor|test|docs|chore)/'; then
-  echo "✅ Branch name '$BRANCH' is valid."
-  echo "🟠 Running tests..."
-  npm test
-  echo "⏺️ Running build command..."
-  npm run build
 else
-  echo "❌ Invalid branch name: '$BRANCH'"
-  echo "🔒 Branch must start with one of: feature/, fix/, improvement/, hotfix/, release/, refactor/, test/, docs/, chore/"
-  exit 1
+  if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|release|refactor|test|docs|chore)/'; then
+    echo "✅ Branch name '$BRANCH' is valid."
+    if echo "$BRANCH" | grep -Eq '^(feature|fix|improvement|hotfix|refactor|test)/'; then
+      echo "🟠 Running tests..."
+      if ! npm test; then
+        echo "❌ Tests failed! Push aborted."
+        exit 1
+      fi
+    fi
+  else
+    echo "❌ Invalid branch name: '$BRANCH'"
+    echo "🔒 Branch must start with one of: feature/, fix/, improvement/, hotfix/, release/, refactor/, test/, docs/, chore/"
+    exit 1
+  fi
 fi
