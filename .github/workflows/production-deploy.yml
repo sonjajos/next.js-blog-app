@@ -12,24 +12,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: '.'
+      # - name: Deploy to Vercel
+      #   uses: amondnet/vercel-action@v20
+      #   with:
+      #     persist-credentials: false
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: '--prod'
+      #     working-directory: '.'
       - name: Read version from package.json
         id: get_version
         run: |
           VERSION=$(jq -r '.version' package.json)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-
       - name: Create and push tag
-        env:
-          pat_token: ${{ secrets.PAT_TOKEN }}
         run: |
           echo "Tagging version ${{ steps.get_version.outputs.version }}"
           git tag ${{ steps.get_version.outputs.version }}
-          git push https://x-access-token:${pat_token}@github.com/sonjajos/next.js-blog-app.git ${{ steps.get_version.outputs.version }}
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/sonjajos/next.js-blog-app.git ${{ steps.get_version.outputs.version }}
